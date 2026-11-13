@@ -79,7 +79,7 @@ Use Swagger UI or another HTTP client. For **at least four meaningful checks**, 
 {
   "organiserName": "string",
   "attendeeCount": 1,
-  "roomID": 0
+  "roomID": 1
 }
 ```
 - Expected:
@@ -88,30 +88,90 @@ Use Swagger UI or another HTTP client. For **at least four meaningful checks**, 
   "bookingID": 1,
   "organiserName": "string",
   "attendeeCount": 1,
-  "roomID": 0,
+  "roomID": 1,
   "status": "ACTIVE"
 }
 ```
 - Actual HTTP status / body:
-- Pass / fail:
+```
+Code: 200
+
+{
+  "bookingID": 2,
+  "organiserName": "string",
+  "attendeeCount": 1,
+  "roomID": 1,
+  "status": "ACTIVE"
+}
+```
+- Pass / fail: Pass
 
 **Test 2 — invalid input or excessive attendee count:**
 - Request / input:
+```
+{
+  "organiserName": "string",
+  "attendeeCount": 100,
+  "roomID": 1
+}
+```
 - Expected:
+```
+Code: 409
+Attendee count exceeds room capacity
+```
 - Actual HTTP status / body:
-- Pass / fail:
-
+```
+Code: 409
+Attendee count exceeds room capacity
+```
+- Pass / fail: Pass  
+  
 **Test 3 — missing booking or room:**
 - Request / input:
+```
+{
+  "organiserName": "string",
+  "attendeeCount": 1,
+  "roomID": 0
+}
+```
 - Expected:
+```
+Code: 404
+Room not found with ID: 0
+```
 - Actual HTTP status / body:
-- Pass / fail:
+```
+Code: 404
+Room not found with ID: 0
+```
+- Pass / fail: Pass  
 
 **Test 4 — requirement specific to my group:**
 - Request / input:
+```
+{
+  "organiserName": "s",
+  "attendeeCount": 1,
+  "roomID": 1
+}
+```
 - Expected:
+```
+Code: 400
+{
+  "organiserName": "size must be between 2 and 60"
+}
+```
 - Actual HTTP status / body:
-- Pass / fail:
+```
+Code: 400
+{
+  "organiserName": "size must be between 2 and 60"
+}
+```
+- Pass / fail: Pass
 
 **Group A:** Demonstrate `GET /api/bookings/search?roomName=...` using an exact room name, bookings ordered by attendee count descending, and an empty list for no matches. Add checks if necessary to show all three behaviours.
 
@@ -119,11 +179,14 @@ Use Swagger UI or another HTTP client. For **at least four meaningful checks**, 
 
 ## 4. Reflection
 
-**What did I understand during the examination but struggle to implement?**
+**What did I understand during the examination but struggle to implement?**  
+I understand all the structures but struggle to remember the syntax. Especially the validation and error handling part, because it was not in the repository we did this semester. 
 
-**Which Spring Boot, JPA, validation, JPQL or OpenFeign concept became clearer after correcting my code? Give a specific example.**
+**Which Spring Boot, JPA, validation, JPQL or OpenFeign concept became clearer after correcting my code? Give a specific example.**  
+Validation and error handling became clearer to me after correcting the code. I implemented a GlobalExceptionHandler to handle exceptions thrown by the service layer and return appropriate HTTP responses. For example, when a booking request exceeds room capacity, the service throws an `ExceedRoomCapacityException`, which is caught by the GlobalExceptionHandler and returns a 409 Conflict response with a meaningful message.
 
-**What will I do differently in my next coding test or API development task?**
+**What will I do differently in my next coding test or API development task?**  
+I think I understand all the underlying concepts but just need more practice to familiarize myself with the syntax. I also need to note down the time for the exam because I mixed it up with the Linux exam and thought the exam starts at 9:20 AM, so I was late and failed to complete the exam.
 
 ## Review lab assessment — 20 marks
 
