@@ -1,8 +1,7 @@
 package ie.atu.sample.exception;
 
-import org.springframework.http.HttpStatus;
-
-public class ExceedRoomCapacityException extends Throwable {
-    public ExceedRoomCapacityException(HttpStatus httpStatus, String attandeeCountExceedsRoomCapacity) {
+public class ExceedRoomCapacityException extends RuntimeException {
+    public ExceedRoomCapacityException(String message) {
+        super(message);
     }
 }

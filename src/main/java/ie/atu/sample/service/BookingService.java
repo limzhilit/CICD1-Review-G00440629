@@ -9,10 +9,7 @@ import ie.atu.sample.model.Booking;
 import ie.atu.sample.model.Status;
 import ie.atu.sample.repository.BookingRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.net.http.HttpResponse;
 
 @Service
 @AllArgsConstructor
@@ -25,7 +22,6 @@ public class BookingService {
         RoomResponse roomResponse = roomClient.getRoomById(bookingRequest.getRoomID());
         if( roomResponse.getCapacity() < bookingRequest.getAttendeeCount()) {
             throw new ExceedRoomCapacityException(
-                    HttpStatus.CONFLICT,
                     "Attendee count exceeds room capacity"
             );
         }

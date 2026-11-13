@@ -37,7 +37,7 @@ at ie.atu.sample.controller.BookingController.createBooking(BookingController.ja
 ### Task 3 — /20
 **My mark:** 0   
 **Evidence from the original code:**
-- Not done, ran out of time. 
+- Not done, ran out of time
 
 **Total self-assessed original examination mark: 65/100**
 
@@ -49,12 +49,19 @@ Start from a **fresh copy of the starter template for your own exam group**, in 
 
 Describe **two or three important problems** in your original code. For each, explain what was wrong, which class or method you changed in the new project, and why the corrected approach works.
 
-**Problem and correction 1:**
-Validation is not enforced and no exception thrown
+**Problem and correction 1:**  
+- Validation is not enforced and no exception thrown
+- Added GlobalExceptionHandler
+- Moved validation to request dto only 
 
-**Problem and correction 2:**
+**Problem and correction 2:**  
+- Capacity exception previously extend Throwable instead of RuntimeException
+- Exception is used when caller must explicitly handle error
+- RuntimeException caller not forced to handle error
+- Capacity exception is now handled in GlobalExceptionHandler
 
-**Problem and correction 3 (optional):**
+**Problem and correction 3:**
+
 
 ## 3. API testing and evidence
 
