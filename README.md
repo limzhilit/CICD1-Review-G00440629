@@ -65,6 +65,10 @@ Describe **two or three important problems** in your original code. For each, ex
 - Implemented part 3 of the exam
 - Retrieve booking using id now works
 
+**Problem and correction 4:**
+- Implement room not found exception
+- try catch the HTTP response from room service
+
 ## 3. API testing and evidence
 
 Use Swagger UI or another HTTP client. For **at least four meaningful checks**, record the request/input, expected result, actual HTTP status/response, and pass/fail. Include unsuccessful cases; a running application alone is not enough.

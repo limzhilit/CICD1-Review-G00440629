@@ -1,11 +1,13 @@
 package ie.atu.sample.service;
 
+import feign.FeignException;
 import ie.atu.sample.client.RoomClient;
 import ie.atu.sample.dto.BookingRequest;
 import ie.atu.sample.dto.BookingResponse;
 import ie.atu.sample.dto.RoomResponse;
 import ie.atu.sample.exception.BookingNotFoundException;
 import ie.atu.sample.exception.ExceedRoomCapacityException;
+import ie.atu.sample.exception.RoomNotFoundException;
 import ie.atu.sample.model.Booking;
 import ie.atu.sample.model.Status;
 import ie.atu.sample.repository.BookingRepository;
@@ -20,7 +22,16 @@ public class BookingService {
     private final BookingRepository bookingRepository;
 
     public BookingResponse createBooking(BookingRequest bookingRequest) {
-        RoomResponse roomResponse = roomClient.getRoomById(bookingRequest.getRoomID());
+        RoomResponse roomResponse;
+
+        try {
+            roomResponse = roomClient.getRoomById(bookingRequest.getRoomID());
+        } catch (FeignException.NotFound ex) {
+            throw new RoomNotFoundException(
+                    "Room not found with ID: " + bookingRequest.getRoomID()
+            );
+        }
+
         if (roomResponse.getCapacity() < bookingRequest.getAttendeeCount()) {
             throw new ExceedRoomCapacityException(
                     "Attendee count exceeds room capacity"
