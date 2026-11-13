@@ -50,6 +50,7 @@ Start from a **fresh copy of the starter template for your own exam group**, in 
 Describe **two or three important problems** in your original code. For each, explain what was wrong, which class or method you changed in the new project, and why the corrected approach works.
 
 **Problem and correction 1:**
+Validation is not enforced and no exception thrown
 
 **Problem and correction 2:**
 

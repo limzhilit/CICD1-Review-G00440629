@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookingRequest {
     @NotBlank
-    @Size(min = 2)
-    @Size(max = 60)
+    @Size(min = 2, max = 60)
     private String organiserName;
 
     @Positive
