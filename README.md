@@ -61,15 +61,33 @@ Describe **two or three important problems** in your original code. For each, ex
 - Capacity exception is now handled in GlobalExceptionHandler
 
 **Problem and correction 3:**
-
+- Implement part 3 of the question that I failed to complete because I ran out of time
+- Implemented part 3 of the exam
+- Retrieve booking using id now works
 
 ## 3. API testing and evidence
 
 Use Swagger UI or another HTTP client. For **at least four meaningful checks**, record the request/input, expected result, actual HTTP status/response, and pass/fail. Include unsuccessful cases; a running application alone is not enough.
 
 **Test 1 — successful booking request:**
-- Request / input:
+- Request / input: 
+```
+{
+  "organiserName": "string",
+  "attendeeCount": 1,
+  "roomID": 0
+}
+```
 - Expected:
+```
+{
+  "bookingID": 1,
+  "organiserName": "string",
+  "attendeeCount": 1,
+  "roomID": 0,
+  "status": "ACTIVE"
+}
+```
 - Actual HTTP status / body:
 - Pass / fail:
 

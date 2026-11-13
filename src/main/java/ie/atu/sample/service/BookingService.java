@@ -4,6 +4,7 @@ import ie.atu.sample.client.RoomClient;
 import ie.atu.sample.dto.BookingRequest;
 import ie.atu.sample.dto.BookingResponse;
 import ie.atu.sample.dto.RoomResponse;
+import ie.atu.sample.exception.BookingNotFoundException;
 import ie.atu.sample.exception.ExceedRoomCapacityException;
 import ie.atu.sample.model.Booking;
 import ie.atu.sample.model.Status;
@@ -18,9 +19,9 @@ public class BookingService {
     private final RoomClient roomClient;
     private final BookingRepository bookingRepository;
 
-    public BookingResponse createBooking(BookingRequest bookingRequest) throws ExceedRoomCapacityException {
+    public BookingResponse createBooking(BookingRequest bookingRequest) {
         RoomResponse roomResponse = roomClient.getRoomById(bookingRequest.getRoomID());
-        if( roomResponse.getCapacity() < bookingRequest.getAttendeeCount()) {
+        if (roomResponse.getCapacity() < bookingRequest.getAttendeeCount()) {
             throw new ExceedRoomCapacityException(
                     "Attendee count exceeds room capacity"
             );
@@ -32,6 +33,19 @@ public class BookingService {
         booking.setStatus(Status.ACTIVE);
         bookingRepository.save(booking);
 
+        return getBookingResponse(booking);
+    }
+
+    public BookingResponse getBookingById(Long id) {
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new BookingNotFoundException(
+                        "Booking not found with ID: " + id
+                ));
+
+        return getBookingResponse(booking);
+    }
+
+    private BookingResponse getBookingResponse(Booking booking) {
         BookingResponse bookingResponse = new BookingResponse();
         bookingResponse.setBookingID(booking.getId());
         bookingResponse.setStatus(booking.getStatus());
@@ -41,6 +55,4 @@ public class BookingService {
 
         return bookingResponse;
     }
-
-
 }
